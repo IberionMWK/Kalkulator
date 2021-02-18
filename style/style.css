@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,300&display=swap');
+/* font-family: 'Kalam', cursive;
+font-family: 'Roboto Mono', monospace; */
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+
+body {
+  /* background-color: #181616; */
+  background-color: #cccccc;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.calcBody {
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid rgb(69, 69, 69);
+  margin: 20px;
+  width: 325px;
+  height: 500px;
+  padding: 1px;
+}
+
+.displayer {
+  /* border: 1px solid #000; */
+  flex-basis: 20%;
+}
+
+p.calcTitle {
+  padding: 0 5px;
+  font-family: 'Kalam', cursive;
+  flex-basis: 5%;
+}
+
+.upperDispPanel,
+.lowerDispPanel {
+  float: right;
+  padding: 3px 8px;
+}
+
+.paragraph.lowerPanel {
+  font-size: 40px;
+}
+
+p.paragraph.upperPanel {
+  color:rgb(150, 150, 150)
+}
+
+.paragraph,
+.key,
+.operationKey,
+.mButton {
+  color: rgb(224, 224, 224);
+}
+
+.memoryPanel {
+  /* border: 1px dashed #000; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 0;
+  flex-basis: 8%;
+}
+.mButton {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  box-sizing: padding-box;
+  font-size: 14px;
+  flex-grow: 1;
+  border: 1px solid rgb(32, 32, 32);
+  margin: 1px;
+  justify-content: space-evenly;
+}
+
+.memoryPanel, 
+.mButton,
+.calcBody {
+  background-color: rgb(32, 32, 32);
+} 
+
+.keyPanel {
+  background-color: #fff;
+  display: flex;
+  flex-flow: row wrap;
+  flex-basis: 70%;
+}
+
+.key,
+.operationKey {
+  display: flex;
+  border: 1.5px solid rgb(32, 32, 32);
+  background-color: rgb(20, 20, 20);
+  flex-basis: 25%;
+  cursor: pointer;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.operationKey:last-child {
+  background-color: #491c4f;
+}
+
+.operationKey:last-child:hover {
+  background-color: #762181;
+}
+
+.key {
+  background-color: rgb(3, 3, 3);
+}
+
+.key:hover,
+.operationKey:hover,
+.mButton:hover {
+  background-color: rgb(61, 61, 61);
+  border: 1.5px solid rgb(94, 94, 94);
+}
