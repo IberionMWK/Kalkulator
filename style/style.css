@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,300&display=swap');
-/* font-family: 'Kalam', cursive;
-font-family: 'Roboto Mono', monospace; */
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Roboto+Mono:wght@100;200;300;400;500;600&family=Roboto:wght@100;300;400;500;700&display=swap');
+/* font-family: 'Roboto Mono', monospace; */
 
 
 * {
@@ -21,13 +20,17 @@ body {
   border: 1.5px solid rgb(69, 69, 69);
   margin: 20px;
   width: 325px;
-  height: 500px;
+  height: 490px;
   padding: 1px;
 }
 
 .displayer {
-  /* border: 1px solid #000; */
-  flex-basis: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 10px;
+  flex-basis: 20%;  
 }
 
 p.calcTitle {
@@ -43,7 +46,9 @@ p.calcTitle {
 }
 
 .paragraph.lowerPanel {
-  font-size: 40px;
+  font-size: 2.5em;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 p.paragraph.upperPanel {
@@ -58,19 +63,17 @@ p.paragraph.upperPanel {
 }
 
 .memoryPanel {
-  /* border: 1px dashed #000; */
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  margin: 0;
-  flex-basis: 8%;
+  flex-basis: 7%;
+  box-shadow: 0px 10px 25px 10px rgba(0,0,0,0.2);
 }
 .mButton {
   display: flex;
   align-items: center;
   cursor: pointer;
   box-sizing: padding-box;
-  font-size: 14px;
+  font-size: 12px;
   flex-grow: 1;
   border: 1px solid rgb(32, 32, 32);
   margin: 1px;
@@ -84,22 +87,29 @@ p.paragraph.upperPanel {
 } 
 
 .keyPanel {
-  background-color: #fff;
-  display: flex;
-  flex-flow: row wrap;
-  flex-basis: 70%;
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-gap: 2px;
 }
 
 .key,
 .operationKey {
-  display: flex;
-  border: 1.5px solid rgb(32, 32, 32);
+  border: 0px solid rgb(32, 32, 32);
   background-color: rgb(20, 20, 20);
-  flex-basis: 25%;
   cursor: pointer;
-  justify-content: space-around;
-  align-items: center;
-  font-size: 1.2em;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.operationKey {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 200;
+}
+
+.operationKey.bigger {
+  font-size: 1.8em;
 }
 
 .operationKey:last-child {
@@ -118,5 +128,4 @@ p.paragraph.upperPanel {
 .operationKey:hover,
 .mButton:hover {
   background-color: rgb(61, 61, 61);
-  border: 1.5px solid rgb(94, 94, 94);
 }
