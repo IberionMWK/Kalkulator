@@ -1,44 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="style/style2.css">
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(e) {
+    $('#1,#2,#3,#4,#5,#6,#7,#8,#9,#0').click(function(){
+		var v = $(this).val();
+		$('#answer').val($('#answer').val() + v);	
+	});
+	$('#C').click(function(){
+		$('#answer').val('');
+		$('#operation').val('');
+		$('#operation').removeClass('activeAnswer');
+		$('#equals').attr('onclick','');
+	});
+	$('#plus').click(function(e) { 
+	
+		if($('#answer').val() == ''){
+			return false;
+			$('#equals').attr('onclick','');
+		}
+		else if ( $('#operation').attr('class') == 'activeAnswer') {
+			$('#operation').val( $('#operation').val() + $('#plus').val() );
+			$('#answer').val('');
+			$('#equals').attr('onclick','');
+		}
+		else{
+			$('#operation').val( $('#operation').val() + $('#answer').val() + $('#plus').val() );
+			$('#answer').val('');
+			$('#equals').attr('onclick','');
+		}
+    });
+	$('#subtract').click(function(e) { 
+	
+		if($('#answer').val() == ''){
+			return false;	
+			$('#equals').attr('onclick','');
+		}
+		else if ( $('#operation').attr('class') == 'activeAnswer') {
+			$('#operation').val( $('#operation').val() + $('#subtract').val() );
+			$('#answer').val('');
+			$('#equals').attr('onclick','');
+		}
+		else{
+			$('#operation').val( $('#operation').val() + $('#answer').val() + $('#subtract').val() );
+			$('#answer').val('');
+			$('#equals').attr('onclick','');
+		}
+    });
+	$('#divide').click(function(e) { 
+	
+		if($('#answer').val() == ''){
+			return false;	
+			$('#equals').attr('onclick','');
+		}
+		else if ( $('#operation').attr('class') == 'activeAnswer') {
+			$('#operation').val( $('#operation').val() + $('#divide').val() );
+			$('#answer').val('');
+			$('#equals').attr('onclick','');
+		}
+		else{
+			$('#operation').val( $('#operation').val() + $('#answer').val() + $('#divide').val() );
+			$('#answer').val('');
+			$('#equals').attr('onclick','');
+		}
+    });
+	$('#product').click(function(e) { 
+	
+		if($('#answer').val() == ''){
+			return false;	
+			$('#equals').attr('onclick','');
+		}
+		else if ( $('#operation').attr('class') == 'activeAnswer') {
+			$('#operation').val( $('#operation').val() + $('#product').val() );
+			$('#answer').val('');
+			$('#equals').attr('onclick','');
+		}
+		else{
+			$('#operation').val( $('#operation').val() + $('#answer').val() + $('#product').val() );
+			$('#answer').val('');
+			$('#equals').attr('onclick','');
+		}
+    });	
+	$('#equals').click(function(){
+		
+		if($('#equals').attr('onclick') != 'return false'){
+		
+			var a = $('#answer').val();
+			var b = $('#operation').val();
+			var c = b.concat(a);
+			$('#answer').val(eval(c));
+			$('#operation').val(eval(c));
+			$('#operation').addClass('activeAnswer');
+			$('#equals').attr('onclick','return false');
+		
+		}
+	});
+});
+</script>
+<style>
+form,input,button { margin:0px; }
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="displayer">
-      <div class="upperDisplayer"></div>
-      <div class="lowerDisplayer"></div>
-    </div>
-    <div class="keyboard">
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>4</button>
-    <button>5</button>
-    <button>6</button>
-    <button>7</button>
-    <button>8</button>
-    <button>9</button>
-    <button>10</button>
-    <button>11</button>
-    <button>12</button>
-    <button>13</button>
-    <button>14</button>
-    <button>15</button>
-    <button>16</button>
-    <button>17</button>
-    <button>18</button>
-    <button>19</button>
-    <button>20</button>
-    <button>21</button>
-    <button>22</button>
-    <button>23</button>
-    <button>24</button>
-  </div>
-  </div>
+<div style="width:200px; margin:auto;">
+    <form action="" id="calculator">
+    	<input type="hidden" id="operation" value=""/>
+    	<input type="text" id="answer" value="" style="width:98%; height:35px;" disabled="disabled"/>
+     	<input type="button" value="+" id="plus" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="-" id="subtract" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="/" id="divide" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="*" id="product" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="1" id="1" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="2" id="2" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="3" id="3" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="4" id="4" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="5" id="5" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="6" id="6" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="7" id="7" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="8" id="8" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="9" id="9" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="0" id="0" style="width:50px; height:50px; float:left;"/>
+        <input type="button" value="C" id="C" style="width:50px; height:50px; float:left; color:red;"/>
+        <input type="button" value="=" id="equals" style="width:50px; height:50px; float:left;"/>
+    </form>
+    <div style="clear:both;"></div>
+</div>
 </body>
 </html>
