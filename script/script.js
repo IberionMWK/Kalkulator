@@ -12,13 +12,85 @@ let activeNumber = '';
 let previousNumber = '';
 let activeOperator = undefined;
 
-const calculate = () => {
-  let operation 
-  if (activeNumber || previousNumber) {
+const addNumber = (number) => {
+  if (number === "⦁") {
+    if(activeNumber.includes('.')) {
+      return
+    }
+    number = '.';
+  }
+  activeNumber = activeNumber.toString() + number.toString()
+}
+
+const selectOp = (operator) => {
+  if (activeNumber === '') {
+    if (!previousNumber) 
+    previousNumber = '0';
+    activeOperator = operator;
     return
   }
-  const x = parseFloat(previousNumber)
-  const y = parseFloat(activeNumber)
+  if (previousNumber !== '') {
+    calculate();
+  }
+  activeOperator = operator;
+  previousNumber = activeNumber
+  activeNumber = ''
+}
+
+const calculate = () => {
+  let operation 
+
+  if (!activeNumber || !previousNumber) {
+    alert('Użyto funkcji calculate przy nieokreślonych zmiennych')
+    return
+  }
+  const a = parseFloat(previousNumber)
+  const b = parseFloat(activeNumber)
+
+  if(isNaN(a) || isNaN(b)) {
+    alert("Wprowadzone zmienne nie są liczbami.")
+    return
+  }
+  
+  switch (activeOperator.toString()) {
+    case '+':
+      result = a + b;
+      break;
+    case '-': 
+    result = a - b; 
+      break;
+    case '×':
+    result = a * b;
+      break;
+    case '÷':
+      if (b === 0) {
+        clearCalc()
+        return
+      }
+      result = a / b;
+
+      break;
+    case '√':
+      result = Math.pow(a, 1 / b);
+      break;
+    case '^': 
+    result = Math.pow(a, b);
+      break;
+    case 'LOG':
+      result = Math.log(a) / Math.log(b);
+      break;
+    case '%':
+      result = a /  100 * b;
+      break;
+  
+    default:
+      alert('Poleciał default switcha')
+      return;
+  }
+
+  activeNumber = result;
+  operation = undefined;
+  previousNumber = '';
 }
 
 const updateResult = () => {
@@ -31,43 +103,23 @@ const updateResult = () => {
   }
 }
 
-const addNumber = (number) => {
-  if (number === "⦁") {
-    if(activeNumber.includes(',')) {
-      return
-    }
-    number = ',';
-  }
-  activeNumber = activeNumber.toString() + number.toString()
-}
+//Clearing
 
 const deleteLastOne = () => {
   activeNumber = activeNumber.toString().slice(0, -1)
 }
 
-const selectOp = (operator) => {
-  if (activeNumber === '') {
-    if (!previousNumber) 
-    previousNumber = '0';
-    activeOperator = operator;
-    return
-    
-  }
+const clearCalc = () => {
 
-  if (previousNumber !== '') {
-    calculate();
-  }
-  activeOperator = operator;
-  previousNumber = activeNumber
-  activeNumber = ''
+  previousNumber = '';
+  activeNumber = '0';
+  activeOperator = undefined;
+  updateResult();
+  activeNumber = '';
 }
 
-numbers.forEach((number) => {
-  number.addEventListener('click', () => {
-    addNumber(number.innerText);
-    updateResult()
-  })
-})
+
+//addEventListener
 
 del.addEventListener('click', () => {
   deleteLastOne();
@@ -75,18 +127,28 @@ del.addEventListener('click', () => {
 })
 
 
-operators.forEach((operator) => {
-operator.addEventListener('click', () => {
-  selectOp(operator.innerText);
-  updateResult();
-})
-});
-
 clear.addEventListener('click', () => {
-  previousNumber = '';
-  activeNumber = '0';
-  activeOperator = undefined;
-  updateResult();
-  activeNumber = '';
-
+  clearCalc()
+  
 })
+
+equal.addEventListener('click', () => {
+  calculate();
+  updateResult();
+})
+  
+  numbers.forEach((number) => {
+    number.addEventListener('click', () => {
+      addNumber(number.innerText);
+      updateResult()
+    })
+  })
+  
+  operators.forEach((operator) => {
+  operator.addEventListener('click', () => {
+    selectOp(operator.innerText);
+    updateResult();
+  })
+  });
+
+  let x = 1.5;
