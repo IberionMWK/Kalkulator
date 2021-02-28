@@ -38,12 +38,13 @@ const selectOp = (operator) => {
 }
 
 const calculate = () => {
-  let operation 
+  let result 
 
   if (!activeNumber || !previousNumber) {
     alert('Użyto funkcji calculate przy nieokreślonych zmiennych')
     return
   }
+
   const a = parseFloat(previousNumber)
   const b = parseFloat(activeNumber)
 
@@ -74,7 +75,7 @@ const calculate = () => {
       result = Math.pow(a, 1 / b);
       break;
     case '^': 
-    result = Math.pow(a, b);
+      result = Math.pow(a, b);
       break;
     case 'LOG':
       result = Math.log(a) / Math.log(b);
@@ -89,15 +90,22 @@ const calculate = () => {
   }
 
   activeNumber = result;
-  operation = undefined;
-  previousNumber = '';
+  result = undefined;
+  // previousNumber = ''; //to nie kasuje numeru
 }
 
 const updateResult = () => {
   lowerPanel.innerText = activeNumber;
   if(activeOperator !== undefined) {
     upperPanel.innerText = previousNumber + activeOperator;
-  }
+    if (previousNumber && activeNumber) {
+       console.log("previousNumber przed konkatenacją w updateResult: " + previousNumber);
+       upperPanel.innerText = previousNumber +activeOperator + activeNumber
+       console.log("... po: " + previousNumber);
+
+     }
+  } 
+
   else {
     upperPanel.innerText = '';
   }
@@ -151,4 +159,3 @@ equal.addEventListener('click', () => {
   })
   });
 
-  let x = 1.5;
