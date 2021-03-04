@@ -177,16 +177,19 @@ const clearCalc = () => {
 
 const divideError = () => {
   blocker.style.display = "block"
-  activeNumber = 'Nie można dzielić przez zero'; 
+  activeNumber = 'Nie można dzielić przez zero';
+  lowerPanel.classList.add('error'); 
   allButtons.forEach((button) => {
-    button.classList.add('inactive');
+  button.classList.add('inactive');
   })
  
   setTimeout(() => {
     blocker.style.display = "none"
     allButtons.forEach((button) => {
-      button.classList.remove('inactive')
+    button.classList.remove('inactive')
     })
+    lowerPanel.classList.remove('error');
+
     clearCalc();
   }, 2000);
   numbers.forEach(number => countingDown(number))
@@ -245,6 +248,3 @@ equal.addEventListener('click', () => {
   });
 
  
-
-  lowerPanel.classList.add('error');
-  lowerPanel.innerText = "Nie można dzielić przez zero"
