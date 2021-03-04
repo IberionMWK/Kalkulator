@@ -4,6 +4,8 @@ const clearEnter = document.querySelector(".clearEnter");
 const clear = document.querySelector(".clear");
 const del = document.querySelector(".del");
 const equal = document.querySelector(".equal");
+const blocker = document.querySelector('.blocker')
+const allButtons = document.querySelectorAll('div button')
 
 const upperPanel = document.querySelector(".upperPanel");
 const lowerPanel = document.querySelector(".lowerPanel");
@@ -22,20 +24,85 @@ const addNumber = (number) => {
   activeNumber = activeNumber.toString() + number.toString()
 }
 
-const selectOp = (operator) => {
-  if (activeNumber === '') {
-    if (!previousNumber) 
-    previousNumber = '0';
-    activeOperator = operator;
+const selectOpl = (operator) => {
+  if (!activeNumber) {    // jeśli aN false
+    if (!previousNumber)        // i pN false
+    previousNumber = '0';       // to dodaj zero
+    activeOperator = operator;  // pN true aN false
     return
   }
-  if (previousNumber !== '') {
-    calculate();
+
+  else if (previousNumber) {
+    calculate()
   }
-  activeOperator = operator;
-  previousNumber = activeNumber
-  activeNumber = ''
+    previousNumber = activeNumber;
+    activeOperator = operator
+    activeNumber = ''
 }
+
+const selectOpTrue = (operator) => {
+  if (activeNumber) {
+    if (!previousNumber) {
+      previousNumber = activeNumber
+      activeOperator = operator
+      activeNumber = ''
+      return
+    }
+    calculate()
+    previousNumber = activeNumber
+    activeOperator = operator
+    activeNumber = ''
+  }
+  
+  if (previousNumber) {
+    activeOperator = operator
+    return
+  } else {
+    previousNumber = '0';
+    activeOperator = operator
+    return
+  }
+
+
+}
+
+const selectOp = (operator) => {
+if (!activeNumber) {
+  if (!previousNumber)
+    previousNumber = '0'    
+    activeOperator = operator
+    return
+} else if (previousNumber) {
+  if (!upperPanel.textContent.includes('='))
+  calculate()
+}
+previousNumber = activeNumber
+activeOperator = operator
+activeNumber = ''
+}
+
+const updateResult = (equalSign = false) => {
+  lowerPanel.innerText = activeNumber;  
+  if(activeOperator !== undefined) {
+    upperPanel.innerText = previousNumber + " " + activeOperator;
+    
+    if (equalSign) {
+      upperPanel.innerText = previousNumber + " " + activeOperator + " " + equalSign + " ="
+    }
+
+    else if (previousNumber && activeNumber ) {
+       console.log("previousNumber przed konkatenacją w updateResult: " + previousNumber);
+       upperPanel.innerText = previousNumber + " " + activeOperator + " " + activeNumber
+       console.log("... po: " + previousNumber);
+     }
+     
+  } 
+
+  else {
+    upperPanel.innerText = '';
+  }
+}
+
 
 const calculate = () => {
   let result 
@@ -65,7 +132,7 @@ const calculate = () => {
       break;
     case '÷':
       if (b === 0) {
-        clearCalc()
+        divideError()
         return
       }
       result = a / b;
@@ -94,28 +161,10 @@ const calculate = () => {
   // previousNumber = ''; //to nie kasuje numeru
 }
 
-const updateResult = () => {
-  lowerPanel.innerText = activeNumber;
-  if(activeOperator !== undefined) {
-    upperPanel.innerText = previousNumber + activeOperator;
-    if (previousNumber && activeNumber) {
-       console.log("previousNumber przed konkatenacją w updateResult: " + previousNumber);
-       upperPanel.innerText = previousNumber +activeOperator + activeNumber
-       console.log("... po: " + previousNumber);
-
-     }
-  } 
-
-  else {
-    upperPanel.innerText = '';
-  }
-}
-
 //Clearing
 
 const deleteLastOne = () => {
-  activeNumber = activeNumber.toString().slice(0, -1)
-}
+  activeNumber = activeNumber.toString().slice(0, -1)}
 
 const clearCalc = () => {
 
@@ -126,12 +175,42 @@ const clearCalc = () => {
   activeNumber = '';
 }
 
+const divideError = () => {
+  blocker.style.display = "block"
+  activeNumber = 'Nie można dzielić przez zero'; 
+  allButtons.forEach((button) => {
+    button.classList.add('inactive');
+  })
+ 
+  setTimeout(() => {
+    blocker.style.display = "none"
+    allButtons.forEach((button) => {
+      button.classList.remove('inactive')
+    })
+    clearCalc();
+  }, 2000);
+  numbers.forEach(number => countingDown(number))
+}
+
+const countingDown = function (number) {
+  if (number.textContent === "1" || number.textContent === "2" || number.textContent === "3") {
+    number.style.color = 'royalblue'
+    setTimeout(function() {number.style.color = 'rgb(224, 224, 224)'}, 2000)
+    if (number.textContent === "3"){
+    setTimeout(function() {number.style.color = 'rgba(224, 224, 224, 0.369)'}, 666);
+    } else if (number.textContent === "2") {
+      setTimeout(function() {number.style.color = 'rgba(224, 224, 224, 0.369)'}, 1333);
+    }
+  }
+}
 
 //addEventListener
 
 del.addEventListener('click', () => {
   deleteLastOne();
   updateResult();
+  
+
 })
 
 
@@ -141,8 +220,14 @@ clear.addEventListener('click', () => {
 })
 
 equal.addEventListener('click', () => {
+  let equalSign = activeNumber;
   calculate();
-  updateResult();
+  updateResult(equalSign);
+  console.log("uP " + upperPanel.innerText);
+  console.log("lP " + lowerPanel.innerText);
+  console.log("aN " + activeNumber);
+  console.log("pN " + previousNumber);
+  
 })
   
   numbers.forEach((number) => {
@@ -159,3 +244,7 @@ equal.addEventListener('click', () => {
   })
   });
 
+ 
+
+  lowerPanel.classList.add('error');
+  lowerPanel.innerText = "Nie można dzielić przez zero"

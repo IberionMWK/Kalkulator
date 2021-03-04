@@ -12,9 +12,11 @@ body {
   /* background-color: #181616; */
   background-color: #cccccc;
   font-family: 'Roboto Mono', monospace;
+  height: 200vh;
 }
 
 .calcBody {
+  position: relative;
   display: flex;
   flex-direction: column;
   border: 1.5px solid rgb(69, 69, 69);
@@ -30,7 +32,7 @@ body {
   align-items: flex-end;
   justify-content: space-between;
   padding: 10px;
-  flex-basis: 20%;  
+  flex-basis: 20%;
   min-height: 106px;
   font-family: calibri;
 }
@@ -45,6 +47,9 @@ p.calcTitle {
 .lowerDispPanel {
   float: right;
   padding: 3px 8px;
+  width: 100%;
+  text-align: right;
+  line-height: 250%;
 }
 
 .paragraph.lowerPanel {
@@ -54,22 +59,25 @@ p.calcTitle {
 }
 
 p.paragraph.upperPanel {
-  color:rgb(150, 150, 150)
+  color: rgb(150, 150, 150)
 }
 
 .paragraph,
-.key,
+.number,
 .operationKey,
-.mButton {
+.mButton,
+.key {
   color: rgb(224, 224, 224);
+  transition: .2s;
 }
 
 .memoryPanel {
   display: flex;
   flex-direction: row;
   flex-basis: 7%;
-  box-shadow: 0px 10px 25px 10px rgba(0,0,0,0.2);
+  box-shadow: 0px 10px 25px 10px rgba(0, 0, 0, 0.2);
 }
+
 .mButton {
   display: flex;
   align-items: center;
@@ -82,11 +90,11 @@ p.paragraph.upperPanel {
   justify-content: space-evenly;
 }
 
-.memoryPanel, 
+.memoryPanel,
 .mButton,
 .calcBody {
   background-color: rgb(32, 32, 32);
-} 
+}
 
 .keyPanel {
   flex-grow: 1;
@@ -130,4 +138,22 @@ p.paragraph.upperPanel {
 .operationKey:hover,
 .mButton:hover {
   background-color: rgb(61, 61, 61);
+}
+
+.inactive {
+  color: rgba(224, 224, 224, 0.369);
+}
+
+.paragraph.lowerPanel.error {
+  font-size: 1.5em;
+}
+
+.blocker {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0);
 }
