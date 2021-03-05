@@ -18,6 +18,9 @@ const addNumber = (number) => {
   if (number === "⦁") {
     if(activeNumber.includes('.')) {
       return
+    } else if (activeNumber === "" && number === "⦁") {
+      activeNumber = '0.';
+      return
     }
     number = '.';
   }
@@ -68,8 +71,9 @@ const selectOpTrue = (operator) => {
 
 const selectOp = (operator) => {
 if (!activeNumber) {
-  if (!previousNumber)
-    previousNumber = '0'    
+  if (!previousNumber) {
+    previousNumber = '0'
+  }    
     activeOperator = operator
     return
 } else if (previousNumber) {
@@ -104,13 +108,13 @@ const updateResult = (equalSign = false) => {
 }
 
 
-const calculate = () => {
+const calculate = (equalSign = false) => {
   let result 
 
   if (!activeNumber || !previousNumber) {
     alert('Użyto funkcji calculate przy nieokreślonych zmiennych')
     return
-  }
+  } 
 
   const a = parseFloat(previousNumber)
   const b = parseFloat(activeNumber)
@@ -224,13 +228,8 @@ clear.addEventListener('click', () => {
 
 equal.addEventListener('click', () => {
   let equalSign = activeNumber;
-  calculate();
-  updateResult(equalSign);
-  console.log("uP " + upperPanel.innerText);
-  console.log("lP " + lowerPanel.innerText);
-  console.log("aN " + activeNumber);
-  console.log("pN " + previousNumber);
-  
+  calculate(equalSign);
+  updateResult(equalSign);  
 })
   
   numbers.forEach((number) => {
