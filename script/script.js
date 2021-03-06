@@ -27,63 +27,28 @@ const addNumber = (number) => {
   activeNumber = activeNumber.toString() + number.toString()
 }
 
-const selectOpl = (operator) => {
-  if (!activeNumber) {    // jeśli aN false
-    if (!previousNumber)        // i pN false
-    previousNumber = '0';       // to dodaj zero
-    activeOperator = operator;  // pN true aN false
-    return
-  }
-
-  else if (previousNumber) {
-    calculate()
-  }
-    previousNumber = activeNumber;
-    activeOperator = operator
-    activeNumber = ''
-}
-
-const selectOpTrue = (operator) => {
-  if (activeNumber) {
-    if (!previousNumber) {
-      previousNumber = activeNumber
-      activeOperator = operator
-      activeNumber = ''
-      return
-    }
-    calculate()
-    previousNumber = activeNumber
-    activeOperator = operator
-    activeNumber = ''
-  }
-  
-  if (previousNumber) {
-    activeOperator = operator
-    return
-  } else {
-    previousNumber = '0';
-    activeOperator = operator
-    return
-  }
-
-
-}
-
 const selectOp = (operator) => {
-if (!activeNumber) {
-  if (!previousNumber) {
-    previousNumber = '0'
-  }    
-    activeOperator = operator
+  if (activeNumber && operator === "±" && !activeNumber.includes("-")) {
+    activeNumber = "-" + activeNumber
     return
-} else if (previousNumber) {
-  if (!upperPanel.textContent.includes('='))
-  calculate()
-}
-previousNumber = activeNumber
-activeOperator = operator
-activeNumber = ''
-}
+  } else if (operator === "±" && activeNumber.includes("-")) {
+    activeNumber = activeNumber.slice(1)
+    return
+  }
+  if (!activeNumber) {
+    if (!previousNumber) {
+      previousNumber = '0'
+    }    
+      activeOperator = operator
+      return
+    } else if (previousNumber) {
+      if (!upperPanel.textContent.includes('='))
+      calculate()
+    } 
+  previousNumber = activeNumber
+  activeOperator = operator
+  activeNumber = ''
+  }
 
 const updateResult = (equalSign = false) => {
   lowerPanel.innerText = activeNumber;  
