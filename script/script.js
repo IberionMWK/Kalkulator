@@ -10,11 +10,15 @@ const allButtons = document.querySelectorAll('div button')
 const upperPanel = document.querySelector(".upperPanel");
 const lowerPanel = document.querySelector(".lowerPanel");
 
-let activeNumber = '';
+let activeNumber = '';  // zmienna podpięta do panelu dolnego przekazywana w update
 let previousNumber = '';
-let activeOperator = undefined;
+let activeOperator = undefined; //to samo co wyżej
 
 const addNumber = (number) => {
+  if (upperPanel.innerText.includes("=")) {
+    clearCalc();
+
+  }
   if (number === "⦁") {
     if(activeNumber.includes('.')) {
       return
@@ -28,6 +32,10 @@ const addNumber = (number) => {
 }
 
 const selectOp = (operator) => {
+
+  if (activeNumber.endsWith(".")) {
+    activeNumber = activeNumber.slice(0, -1);
+  } 
   if (activeNumber && operator === "±" && !activeNumber.includes("-")) {
     activeNumber = "-" + activeNumber
     return
@@ -50,21 +58,19 @@ const selectOp = (operator) => {
   activeNumber = ''
   }
 
-const updateResult = (equalSign = false) => {
+const updateResult = (lastNumber = false) => {
   lowerPanel.innerText = activeNumber;  
   if(activeOperator !== undefined) {
+
     upperPanel.innerText = previousNumber + " " + activeOperator;
     
-    if (equalSign) {
-      upperPanel.innerText = previousNumber + " " + activeOperator + " " + equalSign + " ="
+    if (lastNumber) {
+      upperPanel.innerText = `${previousNumber} ${activeOperator} ${lastNumber} = `
     }
 
     else if (previousNumber && activeNumber ) {
-       console.log("previousNumber przed konkatenacją w updateResult: " + previousNumber);
        upperPanel.innerText = previousNumber + " " + activeOperator + " " + activeNumber
-       console.log("... po: " + previousNumber);
      }
-     
   } 
 
   else {
@@ -73,7 +79,7 @@ const updateResult = (equalSign = false) => {
 }
 
 
-const calculate = (equalSign = false) => {
+const calculate = () => {
   let result 
 
   if (!activeNumber || !previousNumber) {
@@ -127,7 +133,6 @@ const calculate = (equalSign = false) => {
 
   activeNumber = result;
   result = undefined;
-  // previousNumber = ''; //to nie kasuje numeru
 }
 
 //Clearing
@@ -181,20 +186,22 @@ const countingDown = function (number) {
 del.addEventListener('click', () => {
   deleteLastOne();
   updateResult();
-  
-
 })
-
 
 clear.addEventListener('click', () => {
   clearCalc()
-  
 })
 
 equal.addEventListener('click', () => {
-  let equalSign = activeNumber;
-  calculate(equalSign);
-  updateResult(equalSign);  
+  console.log(activeNumber);
+  if (activeNumber.endsWith(".")) {
+    activeNumber = activeNumber.slice(0, -1);
+  } else {
+
+  }
+  let lastNumber = activeNumber;
+  calculate();
+  updateResult(lastNumber);  
 })
   
   numbers.forEach((number) => {
