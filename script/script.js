@@ -131,7 +131,7 @@ const calculate = () => {
       return;
   }
 
-  activeNumber = result;
+  activeNumber = result.toString();
   result = undefined;
 }
 
@@ -183,16 +183,16 @@ const countingDown = function (number) {
 
 //addEventListener
 
-del.addEventListener('click', () => {
+del.addEventListener("click", () => {
   deleteLastOne();
   updateResult();
 })
 
-clear.addEventListener('click', () => {
+clear.addEventListener("click", () => {
   clearCalc()
 })
 
-equal.addEventListener('click', () => {
+equal.addEventListener("click", () => {
   console.log(activeNumber);
   if (activeNumber.endsWith(".")) {
     activeNumber = activeNumber.slice(0, -1);
@@ -205,14 +205,14 @@ equal.addEventListener('click', () => {
 })
   
   numbers.forEach((number) => {
-    number.addEventListener('click', () => {
+    number.addEventListener("click", () => {
       addNumber(number.innerText);
       updateResult()
     })
   })
   
   operators.forEach((operator) => {
-  operator.addEventListener('click', () => {
+  operator.addEventListener("click", () => {
     selectOp(operator.innerText);
     updateResult();
   })
