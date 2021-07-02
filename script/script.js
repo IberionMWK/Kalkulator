@@ -15,9 +15,8 @@ let previousNumber = '';
 let activeOperator = undefined; //to samo co wyżej
 
 const addNumber = (number) => {
-  if (upperPanel.innerText.includes("=")) {
+  if (upperPanel.innerText.includes("=")) { //jeśli mamy jakieś działanie które było potwierdzone znakiem równania to kalkulator ma po wciśnięciu dowolnego guzika numerycznego się odświeżać
     clearCalc();
-
   }
   if (number === "⦁") {
     if(activeNumber.includes('.')) {
@@ -32,10 +31,8 @@ const addNumber = (number) => {
 }
 
 const selectOp = (operator) => {
+  activeNumber = isDotEnds(activeNumber);
 
-  if (activeNumber.endsWith(".")) {
-    activeNumber = activeNumber.slice(0, -1);
-  } 
   if (activeNumber && operator === "±" && !activeNumber.includes("-")) {
     activeNumber = "-" + activeNumber
     return
@@ -60,10 +57,9 @@ const selectOp = (operator) => {
 
 const updateResult = (lastNumber = false) => {
   lowerPanel.innerText = activeNumber;  
+  
   if(activeOperator !== undefined) {
-
     upperPanel.innerText = previousNumber + " " + activeOperator;
-    
     if (lastNumber) {
       upperPanel.innerText = `${previousNumber} ${activeOperator} ${lastNumber} = `
     }
@@ -81,7 +77,7 @@ const updateResult = (lastNumber = false) => {
 
 const calculate = () => {
   let result 
-
+  
   if (!activeNumber || !previousNumber) {
     alert('Użyto funkcji calculate przy nieokreślonych zmiennych')
     return
@@ -181,6 +177,14 @@ const countingDown = function (number) {
   }
 }
 
+const isDotEnds = function (activeNumber) {
+  if (activeNumber.endsWith(".")) {
+    activeNumber = activeNumber.slice(0, -1);
+    return activeNumber
+  } 
+  else return activeNumber
+}
+
 //addEventListener
 
 del.addEventListener("click", () => {
@@ -192,16 +196,20 @@ clear.addEventListener("click", () => {
   clearCalc()
 })
 
-equal.addEventListener("click", () => {
-  console.log(activeNumber);
-  if (activeNumber.endsWith(".")) {
-    activeNumber = activeNumber.slice(0, -1);
-  } else {
-
+equal.addEventListener("click", () => { 
+    activeNumber = isDotEnds(activeNumber);
+    let lastNumber = activeNumber;
+    if (!activeNumber) {
+    lastNumber = previousNumber;
+    activeNumber = previousNumber;   
+    console.log(activeNumber, previousNumber, lastNumber);
+    updateResult(lastNumber)
   }
-  let lastNumber = activeNumber;
+    
   calculate();
   updateResult(lastNumber);  
+
+  
 })
   
   numbers.forEach((number) => {
@@ -217,5 +225,6 @@ equal.addEventListener("click", () => {
     updateResult();
   })
   });
+
 
  
